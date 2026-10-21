@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: ActiveInspect: OpenCV 5 active-perception inspection agent (Lambda arm64 + Function URL + S3 + DynamoDB + Bedrock)
+
+Parameters:
+  BedrockModelId:
+    Type: String
+    Default: ""
+    Description: Optional Bedrock model/inference-profile id for the LLM planner (empty = deterministic policy)
+
+Resources:
+  ResultsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration: {BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true}
+      LifecycleConfiguration: {Rules: [{Id: expire, Status: Enabled, ExpirationInDays: 30}]}
+
+  AuditTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions: [{AttributeName: pk, AttributeType: S}, {AttributeName: sk, AttributeType: S}]
+      KeySchema: [{AttributeName: pk, KeyType: HASH}, {AttributeName: sk, KeyType: RANGE}]
+
+  InspectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Architectures: [arm64]
+      MemorySize: 1024
+      Timeout: 30
+      Environment:
+        Variables:
+          RESULTS_BUCKET: !Ref ResultsBucket
+          AUDIT_TABLE: !Ref AuditTable
+          BEDROCK_MODEL_ID: !Ref BedrockModelId
+      Policies:
+        - S3CrudPolicy: {BucketName: !Ref ResultsBucket}
+        - DynamoDBCrudPolicy: {TableName: !Ref AuditTable}
+        - Statement:
+            - Effect: Allow
+              Action: [bedrock:InvokeModel, bedrock:Converse]
+              Resource: "*"
+      FunctionUrlConfig:
+        AuthType: NONE
+    Metadata:
+      DockerContext: ..
+      Dockerfile: aws/Dockerfile
+
+Outputs:
+  Url:
+    Value: !GetAtt InspectFunctionUrl.FunctionUrl
+  Bucket:
+    Value: !Ref ResultsBucket
+  Table:
+    Value: !Ref AuditTable

@@ -1,0 +1,254 @@
+{
+  "single_shot": {
+    "overall": {
+      "n": 630,
+      "recall": 0.098,
+      "escaped_defects": 379,
+      "false_rejects": 0,
+      "escalated": 0,
+      "auto_accuracy": 0.398,
+      "mean_shots": 1.0,
+      "mean_ms": 8.1
+    },
+    "by_condition": {
+      "nominal": {
+        "n": 90,
+        "recall": 0.683,
+        "escaped_defects": 19,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.789,
+        "mean_shots": 1.0,
+        "mean_ms": 8.3
+      },
+      "dim": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.5
+      },
+      "defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 8.6
+      },
+      "glare": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 8.2
+      },
+      "dim+defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.8
+      },
+      "glare+defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 8.8
+      },
+      "very_dark": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.6
+      }
+    }
+  },
+  "single_shot_clahe": {
+    "overall": {
+      "n": 630,
+      "recall": 0.09,
+      "escaped_defects": 382,
+      "false_rejects": 0,
+      "escalated": 0,
+      "auto_accuracy": 0.394,
+      "mean_shots": 1.0,
+      "mean_ms": 6.7
+    },
+    "by_condition": {
+      "nominal": {
+        "n": 90,
+        "recall": 0.633,
+        "escaped_defects": 22,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.756,
+        "mean_shots": 1.0,
+        "mean_ms": 6.7
+      },
+      "dim": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 6.4
+      },
+      "defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.1
+      },
+      "glare": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.2
+      },
+      "dim+defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 6.4
+      },
+      "glare+defocus": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 7.4
+      },
+      "very_dark": {
+        "n": 90,
+        "recall": 0.0,
+        "escaped_defects": 60,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.333,
+        "mean_shots": 1.0,
+        "mean_ms": 5.9
+      }
+    }
+  },
+  "agent": {
+    "overall": {
+      "n": 630,
+      "recall": 0.907,
+      "escaped_defects": 8,
+      "false_rejects": 0,
+      "escalated": 61,
+      "auto_accuracy": 0.986,
+      "mean_shots": 7.15,
+      "mean_ms": 46.1
+    },
+    "by_condition": {
+      "nominal": {
+        "n": 90,
+        "recall": 0.967,
+        "escaped_defects": 1,
+        "false_rejects": 0,
+        "escalated": 1,
+        "auto_accuracy": 0.989,
+        "mean_shots": 5.97,
+        "mean_ms": 39.1
+      },
+      "dim": {
+        "n": 90,
+        "recall": 0.967,
+        "escaped_defects": 2,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.978,
+        "mean_shots": 7.01,
+        "mean_ms": 46.8
+      },
+      "defocus": {
+        "n": 90,
+        "recall": 0.967,
+        "escaped_defects": 1,
+        "false_rejects": 0,
+        "escalated": 1,
+        "auto_accuracy": 0.989,
+        "mean_shots": 6.03,
+        "mean_ms": 40.4
+      },
+      "glare": {
+        "n": 90,
+        "recall": 0.983,
+        "escaped_defects": 1,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.989,
+        "mean_shots": 7.01,
+        "mean_ms": 47.3
+      },
+      "dim+defocus": {
+        "n": 90,
+        "recall": 0.967,
+        "escaped_defects": 2,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.978,
+        "mean_shots": 7.28,
+        "mean_ms": 48.0
+      },
+      "glare+defocus": {
+        "n": 90,
+        "recall": 0.983,
+        "escaped_defects": 1,
+        "false_rejects": 0,
+        "escalated": 0,
+        "auto_accuracy": 0.989,
+        "mean_shots": 7.21,
+        "mean_ms": 49.8
+      },
+      "very_dark": {
+        "n": 90,
+        "recall": 0.517,
+        "escaped_defects": 0,
+        "false_rejects": 0,
+        "escalated": 59,
+        "auto_accuracy": 1.0,
+        "mean_shots": 9.54,
+        "mean_ms": 51.5
+      }
+    }
+  }
+}

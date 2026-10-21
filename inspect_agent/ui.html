@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset=utf-8><title>ActiveInspect</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#e6edf3;margin:0;padding:24px 32px}h1{margin:0 0 4px}p.sub{color:#8b949e;margin:0 0 18px}
+.ctl{display:flex;gap:12px;align-items:end;margin-bottom:18px}label{font-size:12px;color:#8b949e;display:block}select,input{background:#161b22;color:#e6edf3;border:1px solid #30363d;border-radius:6px;padding:7px}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:9px 16px;font-weight:600;cursor:pointer}button.alt{background:#30363d}
+.grid{display:grid;grid-template-columns:300px 300px 1fr;gap:18px}.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:12px}
+img{width:276px;height:276px;image-rendering:pixelated;border-radius:6px}.v{font-size:26px;font-weight:800}.PASS{color:#3fb950}.REJECT{color:#f85149}.ESCALATE{color:#d29922}
+ol{padding-left:18px;margin:6px 0}li{margin:6px 0;font-size:14px}code{color:#79c0ff}.muted{color:#8b949e;font-size:13px}
+</style></head><body><h1>🔍 ActiveInspect</h1><p class=sub>An OpenCV 5 agent that changes how it looks before deciding: exposure, polariser, focus, frame averaging, zoom. Unsure parts go to a human.</p>
+<div class=ctl><div><label>Lighting / optics</label><select id=cond><option>nominal</option><option selected>dim</option><option>defocus</option><option>glare</option><option>dim+defocus</option><option>glare+defocus</option><option>very_dark</option></select></div>
+<div><label>Ground-truth defect</label><select id=def><option>scratch</option><option>pit</option><option>none</option></select></div>
+<div><label>Part seed</label><input id=seed type=number value=7 style="width:80px"></div><button onclick=go()>Inspect part</button></div>
+<div class=grid><div class=card><b>First shot (default camera)</b><br><img id=f1></div><div class=card><b>After the agent acted</b><br><img id=f2></div>
+<div class=card><div id=verdict class=v>-</div><div id=reason class=muted></div><ol id=trace></ol><div id=hitl hidden><p>Human review needed:</p><button onclick="rev('PASS')">Accept part</button> <button class=alt onclick="rev('REJECT')">Reject part</button></div><div id=meta class=muted></div></div></div>
+<script>
+let cur=null;
+async function go(){const r=await fetch('inspect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({seed:+seed.value,defect:def.value,condition:cond.value})});cur=await r.json();
+f1.src='data:image/png;base64,'+cur.first_frame;f2.src='data:image/png;base64,'+cur.final_frame;verdict.textContent=cur.verdict;verdict.className='v '+cur.verdict;reason.textContent=cur.reason;
+trace.innerHTML=cur.trace.map(t=>`<li><code>${t.tool}</code>: ${t.result}<br><span class=muted>brightness ${t.brightness.toFixed(0)} · saturated ${(t.saturated*100).toFixed(1)}% · defect score ${t.defect_score}</span></li>`).join('')||'<li>no action needed</li>';
+hitl.hidden=cur.verdict!=='ESCALATE';meta.textContent=`${cur.shots} captures · ${cur.ms} ms · planner: ${cur.planner} · ground truth: ${cur.ground_truth}`;}
+async function rev(d){await fetch('review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:cur.id,decision:d})});hitl.innerHTML='<p>Review recorded in audit log ✔</p>';}
+const h=location.hash.match(/c=([\w+]+)&d=(\w+)&s=(\d+)/);if(h){cond.value=decodeURIComponent(h[1]);def.value=h[2];seed.value=h[3];go();}
+</script></body></html>
